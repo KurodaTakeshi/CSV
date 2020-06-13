@@ -9,12 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: test
-
-    env:
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      GCP_USER: ${{ secrets.GCP_USER }}
-      GCP_HOST: ${{ secrets.GCP_HOST }}
-    run: 
+    - uses: actions/checkout@v2
+    - name: deploy
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        GCP_USER: ${{ secrets.GCP_USER }}
+        GCP_HOST: ${{ secrets.GCP_HOST }}
+      run: 
         echo "$SECRET_KEY" > secret_key
         chmod 600 secret_key
         ssh -oStrictHostKeyChecking=no ${GCP_USER}@${GCP_HOST} -i secret_key "cd ~/home && git pull origin master"
