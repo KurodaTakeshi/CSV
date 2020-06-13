@@ -1,31 +1,23 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+name: Deploy to GCP  
+# masterにpushされた時にjobを実行する
 on:
   push:
     branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    - name: Install SSH key
-      uses: actions/checkout@v2
-      with: 
-        private-key: ${{ secrets.SSH_KEY }} 
-        public-key: ${{ secrets.SSH_KEY_PUBLIC }} 
-        name: id_rsa
+    - name: test
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: rsync -acvz --delete ./CSV takeshi@34.72.76.10:~
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      GCP_USER: ${{ secrets.GCP_USER }}
+      GCP_HOST: ${{ secrets.GCP_HOST }}
+      run: 
+        # 秘密鍵にファイル名secret_keyをつける
+        echo "$SECRET_KEY" > secret_key
+        # パーミッションの変更    
+        chmod 600 secret_key
+        # ssh接続　＞　デプロイするディレクトリに行く　＞　デプロイ
+        ssh -oStrictHostKeyChecking=no ${GCP_USER}@${GCP_HOST} -i secret_key "cd ~/home && git pull origin master"
