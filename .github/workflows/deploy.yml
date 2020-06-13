@@ -15,9 +15,6 @@ jobs:
       GCP_USER: ${{ secrets.GCP_USER }}
       GCP_HOST: ${{ secrets.GCP_HOST }}
       run: 
-        # 秘密鍵にファイル名secret_keyをつける
         echo "$SECRET_KEY" > secret_key
-        # パーミッションの変更    
         chmod 600 secret_key
-        # ssh接続　＞　デプロイするディレクトリに行く　＞　デプロイ
         ssh -oStrictHostKeyChecking=no ${GCP_USER}@${GCP_HOST} -i secret_key "cd ~/home && git pull origin master"
