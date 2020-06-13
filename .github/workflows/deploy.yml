@@ -16,9 +16,7 @@ jobs:
       run: 
         echo Hello,world
         pwd
-        #echo Add other actions to build,
-        #echo test, and deploy your project.
-        echo "$SECRET_KEY" > secret_key
-        chmod 600 secret_key
-        ssh -oStrictHostKeyChecking=no ${GCP_USER}@${GCP_HOST} -i secret_key "cd ~/home/takeshi/CSV && pwd" 
+
+        #echo "$SECRET_KEY" > secret_key
+        #chmod 600 secret_key
         #ssh -oStrictHostKeyChecking=no ${GCP_USER}@${GCP_HOST} -i secret_key "cd ~/home/takeshi/CSV && sudo git pull origin master"
