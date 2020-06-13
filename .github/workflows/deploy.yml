@@ -28,4 +28,4 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
-      run: scp -i ~/.ssh/id_rsa ./CSV takeshi@34.72.76.10:~
+      run: rsync -acvz --delete ./CSV takeshi@34.72.76.10:~
