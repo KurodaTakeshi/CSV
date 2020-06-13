@@ -14,7 +14,8 @@ jobs:
         GCP_USER: ${{ secrets.GCP_USER }}
         GCP_HOST: ${{ secrets.GCP_HOST }}
       run: 
-        #echo Hello,world
+        echo Hello,world
+        pwd
         #echo Add other actions to build,
         #echo test, and deploy your project.
         echo "$SECRET_KEY" > secret_key
